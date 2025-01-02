@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<script>
+var stateObject = {
+"India": { "Delhi": ["new Delhi", "North Delhi"],
+"Kerala": ["Thiruvananthapuram", "Palakkad"],
+"Goa": ["North Goa", "South Goa"],
+},
+"Australia": {
+"South Australia": ["Dunstan", "Mitchell"],
+"Victoria": ["Altona", "Euroa"]
+}, "Canada": {
+"Alberta": ["Acadia", "Bighorn"],
+"Columbia": ["Washington" ]
+},
+}
+window.onload = function () {
+var country1 = document.getElementById("country1"),
+state1 = document.getElementById("state1"),
+district1 = document.getElementById("district1");
+for (var country in stateObject) {
+country1.options[country1.options.length] = new Option(country, country);
+}
+country1.onchange = function () {
+state1.length = 1; // remove all options bar first
+district1.length = 1; // remove all options bar first
+if (this.selectedIndex < 1) return; // done 
+for (var state in stateObject[this.value]) {
+state1.options[state1.options.length] = new Option(state,state);
+}
+}
+country1.onchange(); // reset in case page is reloaded
+state1.onchange = function () {
+district1.length = 1; // remove all options bar first
+if (this.selectedIndex < 1) return; // done 
+var district = stateObject[country1.value][this.value];
+for (var i = 0; i < district.length; i++) {
+district1.options[district1.options.length] = new Option(district[i], district[i]);
+}
+}
+}
+</script>
+</head>
+<body>
+<form name="myform" id="myForm">
+Select Country: <select name="country" id="country1" size="1">
+<option value="" selected="selected">Select Country</option>
+</select>
+<br>
+<br>
+Select State: <select name="state" id="state1" size="1">
+<option value="" selected="selected">Please select Country first</option>
+</select>
+<br>
+<br>
+Select District: <select name="district" id="district1" size="1">
+<option value="" selected="selected">Please select State first</option>
+</select><br>
+<input type="submit">
+</form>
+</body>
+</html>
